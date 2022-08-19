@@ -1,3 +1,34 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+client_list:
+    path: /api/v1/clients
+    controller: App\Controller\ClientController::indexAction
+    methods: [GET]
+
+client_show:
+    path: /api/v1/clients/{id}
+    controller: App\Controller\ClientController::showAction
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
+client_create:
+    path: /api/v1/clients
+    controller: App\Controller\ClientController::createAction
+    methods: [POST]
+
+client_update:
+    path: /api/v1/clients/{id}
+    controller: App\Controller\ClientController::updateAction
+    methods: [PUT]
+    requirements:
+        id: '\d+'
+
+client_delete:
+    path: /api/v1/clients/{id}
+    controller: App\Controller\ClientController::deleteAction
+    methods: [DELETE]
+    requirements:
+        id: '\d+'

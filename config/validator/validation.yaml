@@ -1,0 +1,17 @@
+App\Entity\Client:
+    properties:
+        name:
+            - NotBlank: ~
+        accountNumber:
+            - NotBlank: ~
+            - Length:
+                min: 8
+                max: 34
+        accountBalance:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+        phoneNumber:
+            - NotBlank: ~
