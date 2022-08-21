@@ -16,6 +16,13 @@ client_show:
     requirements:
         id: '\d+'
 
+client_balance:
+    path: /api/client/{id}/balance
+    controller: App\Controller\ClientController::balanceAction
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
 client_create:
     path: /api/client
     controller: App\Controller\ClientController::createAction

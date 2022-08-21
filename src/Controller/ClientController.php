@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Form\Type\ClientType;
+use App\Repository\ClientRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ClientController extends AbstractApiController
 {
+    public function __construct(
+        private ClientRepository $clientRepository,
+    ) {}
+
     public function indexAction(ManagerRegistry $doctrine): Response
     {
         $client = $doctrine->getRepository(Client::class)->findAll();
@@ -24,6 +29,20 @@ class ClientController extends AbstractApiController
     {
         $clientId = $request->get('id');
         $client = $doctrine->getRepository(Client::class)->findOneBy([
+            'id' => $clientId,
+        ]);
+
+        if (!$client) {
+            throw new NotFoundHttpException('Account not found');
+        }
+
+        return $this->respond($client);
+    }
+
+    public function balanceAction(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $clientId = $request->get('id');
+        $client = $this->clientRepository->showCurrentBalance([
             'id' => $clientId,
         ]);
 

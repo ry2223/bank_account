@@ -39,6 +39,17 @@ class ClientRepository extends ServiceEntityRepository
         }
     }
 
+    public function showCurrentBalance($value): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.accountBalance')
+            ->where('m.id = :value')
+            ->setParameter('value', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Client[] Returns an array of Client objects
 //     */
