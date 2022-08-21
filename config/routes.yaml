@@ -2,33 +2,52 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
+# =================================================================
+
 client_list:
-    path: /api/v1/clients
+    path: /api/client
     controller: App\Controller\ClientController::indexAction
     methods: [GET]
 
 client_show:
-    path: /api/v1/clients/{id}
+    path: /api/client/{id}
     controller: App\Controller\ClientController::showAction
     methods: [GET]
     requirements:
         id: '\d+'
 
 client_create:
-    path: /api/v1/clients
+    path: /api/client
     controller: App\Controller\ClientController::createAction
     methods: [POST]
 
 client_update:
-    path: /api/v1/clients/{id}
+    path: /api/client/{id}
     controller: App\Controller\ClientController::updateAction
-    methods: [PUT]
+    methods: [PATCH]
     requirements:
         id: '\d+'
 
 client_delete:
-    path: /api/v1/clients/{id}
+    path: /api/client/{id}
     controller: App\Controller\ClientController::deleteAction
     methods: [DELETE]
     requirements:
         id: '\d+'
+
+# =================================================================
+
+money_list:
+    path: /api/client/{clientId}/money
+    controller: App\Controller\MoneyController::indexAction
+    methods: [GET]
+
+money_withdraw:
+    path: /api/withdraw
+    controller: App\Controller\MoneyController::withdrawAction
+    methods: [POST]
+
+money_deposit:
+    path: /api/deposit
+    controller: App\Controller\MoneyController::depositAction
+    methods: [POST]

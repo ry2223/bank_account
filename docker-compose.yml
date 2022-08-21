@@ -32,15 +32,15 @@ services:
     volumes:
       - .:/app:rw,cached
 
-    nginx:
-      build:
-        context: .
-      image: bank-docker/nginx:dev
-      restart: on-failure
-      depends_on:
-        - php
-      ports:
-        - "8080:80"
+  nginx:
+    build:
+      context: .
+    image: bank-docker/nginx:dev
+    restart: on-failure
+    depends_on:
+      - php
+    ports:
+      - "8080:80"
       
 ###< doctrine/doctrine-bundle ###
 

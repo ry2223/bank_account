@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
@@ -29,6 +31,14 @@ class Client
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $phoneNumber = null;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Money::class)]
+    private Collection $money;
+
+    public function __construct()
+    {
+        $this->money = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,6 +101,36 @@ class Client
     public function setPhoneNumber(string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Money>
+     */
+    public function getMoney(): Collection
+    {
+        return $this->money;
+    }
+
+    public function addMoney(Money $money): self
+    {
+        if (!$this->money->contains($money)) {
+            $this->money->add($money);
+            $money->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMoney(Money $money): self
+    {
+        if ($this->money->removeElement($money)) {
+            // set the owning side to null (unless already changed)
+            if ($money->getClient() === $this) {
+                $money->setClient(null);
+            }
+        }
 
         return $this;
     }

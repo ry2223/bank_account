@@ -7,11 +7,14 @@ App\Entity\Client:
             - Length:
                 min: 8
                 max: 34
-        accountBalance:
-            - NotBlank: ~
         email:
             - NotBlank: ~
             - Email:
-                message: The email "{{ value }}" is not a valid email.
+                message: The email "{{ value }}" is not valid.
         phoneNumber:
+            - NotBlank: ~
+
+App\Entity\Money:
+    properties:
+        client:
             - NotBlank: ~
