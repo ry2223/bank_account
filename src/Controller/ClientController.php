@@ -39,7 +39,7 @@ class ClientController extends AbstractApiController
         return $this->respond($client);
     }
 
-    public function balanceAction(Request $request, ManagerRegistry $doctrine): Response
+    public function balanceAction(Request $request): Response
     {
         $clientId = $request->get('id');
         $client = $this->clientRepository->showCurrentBalance([

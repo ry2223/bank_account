@@ -33,6 +33,20 @@ class MoneyController extends AbstractApiController
         return $this->respond($client);
     }
 
+    public function historyAction(Request $request): Response
+    {
+        $clientId = $request->get('clientId');
+        $client = $this->moneyRepository->showHistory([
+            'id' => $clientId,
+        ]);
+
+        if (!$client) {
+            throw new NotFoundHttpException('Account not found');
+        }
+
+        return $this->respond($client);
+    }
+
     public function withdrawAction(Request $request, ManagerRegistry $doctrine): Response
     {
         $clientId = $request->get('id');

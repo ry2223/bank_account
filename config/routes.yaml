@@ -49,6 +49,13 @@ money_list:
     controller: App\Controller\MoneyController::indexAction
     methods: [GET]
 
+money_history:
+    path: /api/money/{clientId}/history
+    controller: App\Controller\MoneyController::historyAction
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
 money_withdraw:
     path: /api/withdraw
     controller: App\Controller\MoneyController::withdrawAction

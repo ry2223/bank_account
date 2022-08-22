@@ -126,7 +126,6 @@ class Client
     public function removeMoney(Money $money): self
     {
         if ($this->money->removeElement($money)) {
-            // set the owning side to null (unless already changed)
             if ($money->getClient() === $this) {
                 $money->setClient(null);
             }

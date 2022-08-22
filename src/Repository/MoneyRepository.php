@@ -41,23 +41,16 @@ class MoneyRepository extends ServiceEntityRepository
         }
     }
 
-//     public function findTransactionHistory($value): array
-//     {
-//         return $this->createQueryBuilder('money')
-//             ->join('.client', 'r')
-//             ->where('r.foo = 1')
-//             ->getQuery()
-//             ->getResult()
-//         ;
-//     }
-
-//     public function findOneBySomeField($value): ?Money
-//     {
-//         return $this->createQueryBuilder('m')
-//             ->andWhere('m.exampleField = :val')
-//             ->setParameter('val', $value)
-//             ->getQuery()
-//             ->getOneOrNullResult()
-//         ;
-//     }
+    public function showHistory($value): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.id', 'c.name', 'c.accountBalance', 'm.moneyWithdrawal', 'm.moneyDeposit')
+            ->from('App\Entity\Client', 'c')    
+            ->join('m.client', 'mid', 'mid = c.id')
+            ->where('m.client = :value')
+            ->setParameter('value', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
