@@ -42,13 +42,13 @@ Example JSON Input Data:
 ```
 
 5. Checking transaction history
-```bash
+```
 [GET] /api/money/{client_id}
 ```
 
 6. Checking transaction history (CLI)
-```bash
-
+```
+php bin/console transaction-history <client_id>
 ```
 
 Installation
