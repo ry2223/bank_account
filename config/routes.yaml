@@ -38,12 +38,12 @@ client_delete:
 # =================================================================
 
 money_list:
-    path: /api/client/{clientId}/money
+    path: /api/money/{clientId}/money
     controller: App\Controller\MoneyController::indexAction
     methods: [GET]
 
 money_transaction:
-    path: /api/transaction
+    path: /api/money/transaction
     controller: App\Controller\MoneyController::transactionAction
     methods: [POST]
 

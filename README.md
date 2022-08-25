@@ -26,7 +26,7 @@ Example JSON Input Data:
 
 3. Withdrawing money
 ```
-[POST] /api/transcation
+[POST] /api/money/transcation
 ```
 Example JSON Input Data:
 ```bash
@@ -38,12 +38,17 @@ Example JSON Input Data:
 
 4. Checking current money balance
 ```
-[GET] /api/client/{client_id}/balance
+[GET] /api/money/{client_id}/balance
 ```
 
 5. Checking transaction history
 ```bash
-[GET] /api/client/{client_id}
+[GET] /api/money/{client_id}
+```
+
+6. Checking transaction history (CLI)
+```bash
+
 ```
 
 Installation
