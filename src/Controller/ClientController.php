@@ -22,12 +22,12 @@ class ClientController extends AbstractApiController
     {
         $client = $doctrine->getRepository(Client::class)->findAll();
 
-        return $this->respond($client);
+        return $this->respond($client, Response::HTTP_OK);
     }
 
     public function showAction(Request $request, ManagerRegistry $doctrine): Response
     {
-        $clientId = $request->get('id');
+        $clientId = $request->get('clientId');
         $client = $doctrine->getRepository(Client::class)->findOneBy([
             'id' => $clientId,
         ]);
@@ -36,21 +36,7 @@ class ClientController extends AbstractApiController
             throw new NotFoundHttpException('Account not found');
         }
 
-        return $this->respond($client);
-    }
-
-    public function balanceAction(Request $request): Response
-    {
-        $clientId = $request->get('id');
-        $client = $this->clientRepository->showCurrentBalance([
-            'id' => $clientId,
-        ]);
-
-        if (!$client) {
-            throw new NotFoundHttpException('Account not found');
-        }
-
-        return $this->respond($client);
+        return $this->respond($client, Response::HTTP_OK);
     }
 
     public function createAction(Request $request, ManagerRegistry $doctrine): Response
@@ -68,12 +54,12 @@ class ClientController extends AbstractApiController
         $doctrine->getManager()->persist($client);
         $doctrine->getManager()->flush();
 
-        return $this->respond($client);
+        return $this->respond($client, Response::HTTP_CREATED);
     }
 
     public function updateAction(Request $request, ManagerRegistry $doctrine): Response
     {
-        $clientId = $request->get('id');
+        $clientId = $request->get('clientId');
         $client = $doctrine->getRepository(Client::class)->findOneBy([
             'id' => $clientId,
         ]);
@@ -98,12 +84,12 @@ class ClientController extends AbstractApiController
         $doctrine->getManager()->persist($client);
         $doctrine->getManager()->flush();
 
-        return $this->respond($client);
+        return $this->respond($client, Response::HTTP_CREATED);
     }
 
     public function deleteAction(Request $request, ManagerRegistry $doctrine): Response
     {
-        $clientId = $request->get('id');
+        $clientId = $request->get('clientId');
         $client = $doctrine->getRepository(Client::class)->findOneBy([
             'id' => $clientId,
         ]);
@@ -115,6 +101,6 @@ class ClientController extends AbstractApiController
         $doctrine->getManager()->remove($client);
         $doctrine->getManager()->flush();
 
-        return $this->respond(null);
+        return $this->respond(Response::HTTP_OK);
     }
 }

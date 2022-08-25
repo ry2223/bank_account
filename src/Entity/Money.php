@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\MoneyRepository;
@@ -12,12 +14,12 @@ class Money
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    
+    #[ORM\Column(nullable: true, type: "decimal", precision: 10, scale: 2)]
+    private $moneyDeposit = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $moneyWithdrawal = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $moneyDeposit = null;
+    #[ORM\Column(nullable: true, type: "decimal", precision: 10, scale: 2)]
+    private $moneyWithdrawal = null;
 
     #[ORM\ManyToOne(inversedBy: 'money')]
     private ?Client $client = null;

@@ -16,7 +16,6 @@ class ClientType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('accountNumber', TextType::class)
-            ->add('accountBalance', TextType::class)
             ->add('email', EmailType::class)
             ->add('phoneNumber', TextType::class)
         ;

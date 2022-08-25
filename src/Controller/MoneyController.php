@@ -33,6 +33,48 @@ class MoneyController extends AbstractApiController
         return $this->respond($client);
     }
 
+    public function transactionAction(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $form = $this->buildForm(MoneyType::class);
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) { 
+            return $this->respond($form, Response::HTTP_BAD_REQUEST);
+        }
+
+        /** @var Money $money */
+        $money = $form->getData();
+
+        $doctrine->getManager()->persist($money);
+        $doctrine->getManager()->flush();
+
+        return $this->respond($money, Response::HTTP_CREATED);
+    }
+
+    public function balanceAction(Request $request): Response
+    {
+        $clientId = $request->get('clientId');
+        $client = $this->moneyRepository->showCurrentBalance([
+            'id' => $clientId,
+        ]);
+
+        if (!$client) {
+            throw new NotFoundHttpException('Account not found');
+        }
+
+        foreach($client as $money) {
+            $deposit[] = intval($money['moneyDeposit']);
+            $withdrawal[] = intval($money['moneyWithdrawal']);
+        }
+
+        $depositSum = array_sum($deposit);
+        $withdrawalSum = array_sum($withdrawal);
+
+        $balance = $depositSum - $withdrawalSum;
+
+        return $this->respond("Account balance: $balance", Response::HTTP_OK);
+    }
+
     public function historyAction(Request $request): Response
     {
         $clientId = $request->get('clientId');
@@ -41,54 +83,9 @@ class MoneyController extends AbstractApiController
         ]);
 
         if (!$client) {
-            throw new NotFoundHttpException('Account not found');
+            throw new NotFoundHttpException('Account or transaction history not found');
         }
 
-        return $this->respond($client);
-    }
-
-    public function withdrawAction(Request $request, ManagerRegistry $doctrine): Response
-    {
-        $clientId = $request->get('id');
-        $client = $doctrine->getRepository(Client::class)->findOneBy([
-            'id' => $clientId,
-        ]);
-
-        $form = $this->buildForm(MoneyType::class, $client, [
-            'method' => $request->getMethod(),
-        ]);
-
-        $form = $this->buildForm(MoneyType::class);
-        $form->handleRequest($request);
-
-        if (!$form->isSubmitted() || !$form->isValid()) { 
-            return $this->respond($form, Response::HTTP_BAD_REQUEST);
-        }
-
-        /** @var Money $money */
-        $money = $form->getData();
-
-        $doctrine->getManager()->persist($money);
-        $doctrine->getManager()->flush();
-
-        return $this->respond($money);
-    }
-
-    public function depositAction(Request $request, ManagerRegistry $doctrine): Response
-    {
-        $form = $this->buildForm(MoneyType::class);
-        $form->handleRequest($request);
-
-        if (!$form->isSubmitted() || !$form->isValid()) { 
-            return $this->respond($form, Response::HTTP_BAD_REQUEST);
-        }
-
-        /** @var Money $money */
-        $money = $form->getData();
-
-        $doctrine->getManager()->persist($money);
-        $doctrine->getManager()->flush();
-
-        return $this->respond($money);
+        return $this->respond($client, Response::HTTP_OK);
     }
 }

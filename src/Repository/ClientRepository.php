@@ -38,15 +38,4 @@ class ClientRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    public function showCurrentBalance($value): array
-    {
-        return $this->createQueryBuilder('m')
-            ->select('m.accountBalance')
-            ->where('m.id = :value')
-            ->setParameter('value', $value)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 }

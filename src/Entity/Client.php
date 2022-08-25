@@ -23,9 +23,6 @@ class Client
     #[ORM\Column(nullable: true)]
     private ?string $accountNumber = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?string $accountBalance = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
@@ -65,18 +62,6 @@ class Client
     public function setAccountNumber(string $accountNumber): self
     {
         $this->accountNumber = $accountNumber;
-
-        return $this;
-    }
-
-    public function getAccountBalance(): ?string
-    {
-        return $this->accountBalance;
-    }
-
-    public function setAccountBalance(string $accountBalance): self
-    {
-        $this->accountBalance = $accountBalance;
 
         return $this;
     }

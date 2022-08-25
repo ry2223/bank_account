@@ -10,15 +10,8 @@ client_list:
     methods: [GET]
 
 client_show:
-    path: /api/client/{id}
+    path: /api/client/{clientId}
     controller: App\Controller\ClientController::showAction
-    methods: [GET]
-    requirements:
-        id: '\d+'
-
-client_balance:
-    path: /api/client/{id}/balance
-    controller: App\Controller\ClientController::balanceAction
     methods: [GET]
     requirements:
         id: '\d+'
@@ -29,14 +22,14 @@ client_create:
     methods: [POST]
 
 client_update:
-    path: /api/client/{id}
+    path: /api/client/{clientId}
     controller: App\Controller\ClientController::updateAction
     methods: [PATCH]
     requirements:
         id: '\d+'
 
 client_delete:
-    path: /api/client/{id}
+    path: /api/client/{clientId}
     controller: App\Controller\ClientController::deleteAction
     methods: [DELETE]
     requirements:
@@ -49,19 +42,21 @@ money_list:
     controller: App\Controller\MoneyController::indexAction
     methods: [GET]
 
+money_transaction:
+    path: /api/transaction
+    controller: App\Controller\MoneyController::transactionAction
+    methods: [POST]
+
+money_balance:
+    path: /api/money/{clientId}/balance
+    controller: App\Controller\MoneyController::balanceAction
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
 money_history:
     path: /api/money/{clientId}/history
     controller: App\Controller\MoneyController::historyAction
     methods: [GET]
     requirements:
         id: '\d+'
-
-money_withdraw:
-    path: /api/withdraw
-    controller: App\Controller\MoneyController::withdrawAction
-    methods: [POST]
-
-money_deposit:
-    path: /api/deposit
-    controller: App\Controller\MoneyController::depositAction
-    methods: [POST]

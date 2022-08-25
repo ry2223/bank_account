@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Client;
 use App\Entity\Money;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -41,12 +40,22 @@ class MoneyRepository extends ServiceEntityRepository
         }
     }
 
+    public function showCurrentBalance($value): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.moneyDeposit', 'm.moneyWithdrawal')
+            ->where('m.client = :value')
+            ->setParameter('value', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function showHistory($value): array
     {
         return $this->createQueryBuilder('m')
-            ->select('m.id', 'c.name', 'c.accountBalance', 'm.moneyWithdrawal', 'm.moneyDeposit')
-            ->from('App\Entity\Client', 'c')    
-            ->join('m.client', 'mid', 'mid = c.id')
+            ->select('m.moneyWithdrawal', 'm.moneyDeposit')
+            ->innerJoin('App\Entity\Client', 'c', Join::WITH, 'c.id = m.client')
             ->where('m.client = :value')
             ->setParameter('value', $value)
             ->getQuery()
