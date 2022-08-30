@@ -31,9 +31,13 @@ class TransactionHistoryCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $clientId = $input->getArgument('clientId');
-
         $moneyHistory = $this->moneyRepository->showHistory($clientId);
-        print_r($moneyHistory);
+
+        if ($moneyHistory) {
+            print_r($moneyHistory);
+        } else {
+            print_r('No history to display or account does not exist.' . PHP_EOL);
+        }
 
         return Command::SUCCESS;
     }
