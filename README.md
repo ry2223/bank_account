@@ -1,3 +1,13 @@
+Installation
+------------
+
+```bash
+$ composer install
+$ php bin/console doctrine:migrations:diff
+$ php bin/console doctrine:migrations:migrate
+$ php bin/console symfony serve -d --no-tls
+```
+
 1. Creating a new account
 ```
 [POST] /api/client
@@ -49,14 +59,4 @@ Example JSON Input Data:
 6. Checking transaction history (CLI)
 ```
 php bin/console transaction-history <client_id>
-```
-
-Installation
-------------
-
-```bash
-$ composer install
-$ php bin/console doctrine:migrations:diff
-$ php bin/console doctrine:migrations:migrate
-$ php bin/console symfony serve -d --no-tls
 ```
