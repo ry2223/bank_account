@@ -63,8 +63,8 @@ class MoneyController extends AbstractApiController
         }
 
         foreach($client as $money) {
-            $deposit[] = intval($money['moneyDeposit']);
-            $withdrawal[] = intval($money['moneyWithdrawal']);
+            $deposit[] = $money['moneyDeposit'];
+            $withdrawal[] = $money['moneyWithdrawal'];
         }
 
         $depositSum = array_sum($deposit);

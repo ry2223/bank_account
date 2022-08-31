@@ -29,7 +29,7 @@ Example JSON Input Data:
 Example JSON Input Data:
 ```bash
 {
-    "moneyDeposit": "7500.45",
+    "moneyDeposit": 7500.45,
     "client": 1
 }
 ```
@@ -41,7 +41,7 @@ Example JSON Input Data:
 Example JSON Input Data:
 ```bash
 {
-    "moneyWithdrawal": "5000.37",
+    "moneyWithdrawal": 5000.37,
     "client": 1
 }
 ```

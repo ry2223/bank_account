@@ -51,6 +51,18 @@ class ClientController extends AbstractApiController
         /** @var Client $client */
         $client = $form->getData();
 
+        // $clientAccountNumber = $client->getAccountNumber();
+        // $accountNumber = $this->entityManager->getRepository(Client::class)->findOneBy([
+        //     'accountNumber' => $clientAccountNumber
+        // ]);
+
+        // if ($accountNumber === null) {
+        //     $this->entityManager->persist($client);
+        //     $this->entityManager->flush();
+        // } else {
+        //     print_r(PHP_EOL . '===Account number already exists===');
+        // }
+
         $doctrine->getManager()->persist($client);
         $doctrine->getManager()->flush();
 
